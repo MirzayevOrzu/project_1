@@ -7,7 +7,7 @@ stuff
 -id
 -first_name
 -last_name
--role 'teacher' | 'admin' | 'assistent_teacher' | 'superAdmin'
+-role 'teacher' | 'admin' | 'assistent_teacher' | 'super_admin'
 -username
 -password
 
