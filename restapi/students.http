@@ -1,0 +1,38 @@
+### List Students
+GET http://localhost:3001/students
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg2NTY4NDExLCJleHAiOjE2ODY2NTQ4MTF9.0Ld1oAXHUQVsn-6Cf8_shYXTKLpDQ3zAOGVt30z4LnE
+
+
+
+### Show single students
+GET http://localhost:3001/students/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg2NTY4NDExLCJleHAiOjE2ODY2NTQ4MTF9.0Ld1oAXHUQVsn-6Cf8_shYXTKLpDQ3zAOGVt30z4LnE
+
+
+
+### Update students
+PATCH http://localhost:3001/students/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg2NTY4NDExLCJleHAiOjE2ODY2NTQ4MTF9.0Ld1oAXHUQVsn-6Cf8_shYXTKLpDQ3zAOGVt30z4LnE
+Content-Type: application/json
+
+{
+    "first_name": "Umid",
+    "last_name": "Meliboev"
+}
+
+
+
+### Delete students
+DELETE http://localhost:3001/students/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg2NTY4NDExLCJleHAiOjE2ODY2NTQ4MTF9.0Ld1oAXHUQVsn-6Cf8_shYXTKLpDQ3zAOGVt30z4LnE
+
+
+### POST students
+POST http://localhost:3001/students
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg2NTY4NDExLCJleHAiOjE2ODY2NTQ4MTF9.0Ld1oAXHUQVsn-6Cf8_shYXTKLpDQ3zAOGVt30z4LnE
+Content-Type: application/json
+
+{
+    "first_name": "Umidjon",
+    "last_name": "Meleboev"
+}

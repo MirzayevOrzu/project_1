@@ -25,8 +25,8 @@ POST http://localhost:3001/stuff/login
 Content-Type: application/json
 
 {
-  "username": "admin1",
-  "password": "12345"
+  "username": "superadmin",
+  "password": "foobar"
 }
 
 ### Update stuff
