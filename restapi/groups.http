@@ -1,0 +1,12 @@
+POST http://localhost:3001/groups
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg2NjEyNDgxLCJleHAiOjE2ODY2OTg4ODF9.EHYSgJBaPF4BOpDtnhqEYs3uObdqvoT1fbzko-4Czko
+Content-Type: application/json
+
+{
+  "name": "N82",
+  "teacher_id": 2,
+  "assistent_teacher_id": 3
+}
+
+###
+GET http://localhost:3001/groups
