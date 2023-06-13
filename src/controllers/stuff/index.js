@@ -15,7 +15,7 @@ const postStuff = async (req, res) => {
     const { first_name, last_name, role, username, password } = req.body;
 
     const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hashPassword(password, salt)
+    const hashedPassword = await bcrypt.hash(password, salt)
 
     const result = await db('stuff')
       .insert({
