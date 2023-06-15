@@ -58,8 +58,12 @@ const getGroups = async (req, res) => {
       .select(
         'groups.id',
         'groups.name',
+        'stuff_teacher.id as teacher_id',
         db.raw("CONCAT(stuff_teacher.first_name, ' ', stuff_teacher.last_name) as teacher"),
-        db.raw("CONCAT(stuff_assistent.first_name, ' ', stuff_assistent.last_name) as assistent_teacher")
+        'stuff_assistent.id as assistent_id',
+        db.raw(
+          "CONCAT(stuff_assistent.first_name, ' ', stuff_assistent.last_name) as assistent_teacher"
+        )
       );
 
     res.status(201).json({
@@ -72,7 +76,89 @@ const getGroups = async (req, res) => {
   }
 };
 
+const showGroup = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const group = await db('groups')
+      .leftJoin('stuff as stuff_teacher', 'stuff_teacher.id', 'groups.teacher_id')
+      .leftJoin('stuff as stuff_assistent ', 'stuff_assistent.id', 'groups.assistent_teacher_id')
+      .select(
+        'groups.id',
+        'groups.name',
+        'stuff_teacher.id as teacher_id',
+        db.raw("CONCAT(stuff_teacher.first_name, ' ', stuff_teacher.last_name) as teacher"),
+        'stuff_assistent.id as assistent_id',
+        db.raw(
+          "CONCAT(stuff_assistent.first_name, ' ', stuff_assistent.last_name) as assistent_teacher"
+        )
+      )
+      .where({ 'groups.id': id })
+      .first();
+
+    if (!group) {
+      return res.status(404).json({
+        error: 'Group not found',
+      });
+    }
+
+    res.status(201).json({
+      group,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+const patchGroup = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updated = await db('groups').where({ id }).update(req.body).returning('*');
+
+    res.status(200).json({
+      updated: updated[0],
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+const deleteGroup = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const existing = await db('groups').where({ id }).first();
+
+    if (!existing) {
+      return res.status(404).json({
+        error: `${id}-idle group topilmadi`,
+      });
+    }
+
+    const deleted = await db('groups')
+      .where({ id })
+      .delete()
+      .returning(['id', 'name', 'teacher_id', 'assistent_id']);
+
+    res.status(200).json({
+      deleted: deleted[0],
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   postGroup,
   getGroups,
+  showGroup,
+  patchGroup,
+  deleteGroup,
 };

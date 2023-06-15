@@ -3,7 +3,7 @@ const config = require('./shared/config');
 const stuffRoutes = require('./routes/stuff');
 const studentsRoutes = require('./routes/students');
 const groupsRoutes = require('./routes/groups');
-const groupsRoutes = require('./routes/directions');
+const directionsRoutes = require('./routes/directions');
 
 const app = express();
 
