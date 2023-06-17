@@ -1,13 +1,12 @@
 ### List Students
 GET http://localhost:3001/students
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg2NTY4NDExLCJleHAiOjE2ODY2NTQ4MTF9.0Ld1oAXHUQVsn-6Cf8_shYXTKLpDQ3zAOGVt30z4LnE
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg2OTYxNzMxLCJleHAiOjE2ODcwNDgxMzF9.gCGm9gFAJNjIz73Px4HHx4zTu4OCuoSa4kdeVuNIZkE
 
 
 
 ### Show single students
-GET http://localhost:3001/students/1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg2NTY4NDExLCJleHAiOjE2ODY2NTQ4MTF9.0Ld1oAXHUQVsn-6Cf8_shYXTKLpDQ3zAOGVt30z4LnE
-
+GET http://localhost:3001/students/5
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg2OTYxNzMxLCJleHAiOjE2ODcwNDgxMzF9.gCGm9gFAJNjIz73Px4HHx4zTu4OCuoSa4kdeVuNIZkE
 
 
 ### Update students

@@ -1,0 +1,2 @@
+GET http://localhost:3001/directions
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg2OTYxNzMxLCJleHAiOjE2ODcwNDgxMzF9.gCGm9gFAJNjIz73Px4HHx4zTu4OCuoSa4kdeVuNIZkE
