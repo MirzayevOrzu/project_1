@@ -8,12 +8,27 @@ const db = require('../../db');
  */
 const getDirections = async (req, res) => {
   try {
+    const { q, offset = 0, limit = 5, sort_by = 'id', sort_order = 'desc' } = req.query;
     const dbQuery = db('directions').select('id', 'name');
+
+    if (q) {
+      dbQuery.andWhereILike('groups.name', `%${q}%`);
+    }
+
+    const total = await dbQuery.clone().count().groupBy('id');
+
+    dbQuery.orderBy(sort_by, sort_order);
+    dbQuery.limit(limit).offset(offset);
 
     const directions = await dbQuery;
 
     res.status(200).json({
       directions,
+      pageInfo: {
+        total: total.length,
+        offset,
+        limit,
+      },
     });
   } catch (error) {
     res.status(500).json({

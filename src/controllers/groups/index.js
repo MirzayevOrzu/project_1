@@ -52,15 +52,32 @@ const postGroup = async (req, res) => {
  */
 const getGroups = async (req, res) => {
   try {
-    const result = await db('groups').select(
+    const { q, offset = 0, limit = 5, sort_by = 'id', sort_order = 'desc' } = req.query;
+    const dbQuery = db('groups').select(
       'groups.id',
       'groups.name',
       'groups.teacher_id',
       'groups.assistent_teacher_id'
     );
 
+    if (q) {
+      dbQuery.andWhereILike('groups.name', `%${q}%`);
+    }
+
+    const total = await dbQuery.clone().count().groupBy('id');
+
+    dbQuery.orderBy(sort_by, sort_order);
+    dbQuery.limit(limit).offset(offset);
+
+    const result = await dbQuery;
+
     res.status(201).json({
       groups: result,
+      pageInfo: {
+        total: total.length,
+        offset,
+        limit,
+      },
     });
   } catch (error) {
     res.status(500).json({
