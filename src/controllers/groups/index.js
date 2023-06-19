@@ -93,27 +93,50 @@ const showGroup = async (req, res) => {
     const group = await db('groups')
       .leftJoin('stuff as stuff_teacher', 'stuff_teacher.id', 'groups.teacher_id')
       .leftJoin('stuff as stuff_assistent ', 'stuff_assistent.id', 'groups.assistent_teacher_id')
-      .innerJoin('groups_students', 'groups_students.group_id', 'groups.id')
-      .innerJoin('students', 'groups_students.student_id', 'students.id')
+      .leftJoin('groups_students', 'groups_students.group_id', 'groups.id')
+      .leftJoin('students', 'groups_students.student_id', 'students.id')
       .select(
         'groups.id',
         'groups.name',
-        'stuff_teacher.id as teacher_id',
-        db.raw("CONCAT(stuff_teacher.first_name, ' ', stuff_teacher.last_name) as teacher"),
-        'stuff_assistent.id as assistent_id',
-        db.raw(
-          "CONCAT(stuff_assistent.first_name, ' ', stuff_assistent.last_name) as assistent_teacher"
-        ),
-        db.raw(
-          `json_agg(json_build_object(
-          'id', students.id,
-          'first_name', students.first_name, 
-          'last_name', students.last_name
-        )) as students`
+        db.raw(`
+        CASE
+        WHEN stuff_teacher.id IS NULL THEN NULL
+        ELSE json_build_object(
+          'id', stuff_teacher.id,
+          'first_name', stuff_teacher.first_name,
+          'last_name', stuff_teacher.last_name,
+          'role', stuff_teacher.role,
+          'username', stuff_teacher.username
         )
+        END as teacher
+        `),
+        db.raw(`
+        CASE
+        WHEN stuff_assistent.id IS NULL THEN NULL
+        ELSE json_build_object(
+          'id', stuff_assistent.id,
+          'first_name', stuff_assistent.first_name,
+          'last_name', stuff_assistent.last_name,
+          'role', stuff_assistent.role,
+          'username', stuff_assistent.username
+        )
+        END as assistent
+        `),
+        db.raw(`
+        CASE
+        WHEN students.id IS NULL THEN '[]'
+        ELSE json_agg(
+          json_build_object(
+            'id', students.id,
+            'first_name', students.first_name,
+            'last_name', students.last_name
+          )
+        )
+        END as students
+        `)
       )
       .where({ 'groups.id': id })
-      .groupBy('groups.id', 'stuff_teacher.id', 'stuff_assistent.id')
+      .groupBy('groups.id', 'stuff_teacher.id', 'stuff_assistent.id', 'students.id')
       .first();
 
     if (!group) {
