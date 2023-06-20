@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('../../db');
+const { NotFoundError } = require('../../shared/errors');
 
 /**
  *
@@ -42,7 +43,7 @@ const getStudents = async (req, res) => {
  * @param {express.Request} req
  * @param {express.Response} res
  */
-const showStudents = async (req, res) => {
+const showStudents = async (req, res, next) => {
   try {
     const { id } = req.params;
     console.log(id);
@@ -52,18 +53,14 @@ const showStudents = async (req, res) => {
       .first();
 
     if (!students) {
-      return res.status(404).json({
-        error: 'Student not found',
-      });
+      throw new NotFoundError('Student not found');
     }
 
     res.status(200).json({
       students,
     });
   } catch (error) {
-    res.status(500).json({
-      error: error.message,
-    });
+    next(error);
   }
 };
 
